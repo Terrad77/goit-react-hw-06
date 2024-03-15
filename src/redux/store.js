@@ -1,6 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 //npm install redux-persist
-import { persistStore, persistReducer } from 'redux-persist';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 // import { combineReducers } from '@reduxjs/toolkit';
 import contactsReducer from './contactsSlice'; // Імпорт редюсера контактів
@@ -37,6 +46,12 @@ export const store = configureStore({
       contacts: persistedContactsReducer, // передаємо новий reducer
       filters: filtersReducer, // Додавання редюсера фільтрів до слайсу filters
     },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
   preloadedState: initialState, // Початковий стан store
 });
 

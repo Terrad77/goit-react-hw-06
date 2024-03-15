@@ -5,9 +5,17 @@ import { changeFilter } from '../../redux/filtersSlice'; // Імпорт екш�
 
 //Поле пошуку – це інпут без форми, значення якого записується у стан контрольований елемент,
 //передаємо value -  значення стану, onChange -  (refactoring ) dispatch екшену зміни фільтра
-export default function SearchBox({ value }) {
+export default function SearchBox() {
   const dispatch = useDispatch(); // Отримання функції dispatch з Redux store
   const nameFieldId = useId();
+
+  // const handleFilterChange = value => {
+  //   dispatch(changeFilter(value));
+  // };
+
+  const handleFilterChange = value => {
+    dispatch(changeFilter(value));
+  };
 
   const handleChange = newValue => {
     dispatch(changeFilter(newValue)); // Відправка екшену зміни фільтра
@@ -27,7 +35,7 @@ export default function SearchBox({ value }) {
         type="text"
         name="name"
         id={nameFieldId}
-        value={value}
+        value={handleFilterChange}
         onChange={e => handleChange(e.target.value)}
       />
     </div>

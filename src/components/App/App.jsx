@@ -67,24 +67,24 @@ export default function App() {
   //   }
   // }, [contacts]);
 
-  const handleAddContact = newContact => {
-    dispatch(addContact(newContact));
-  };
+  // const handleAddContact = newContact => {
+  //   dispatch(addContact(newContact));
+  // };
 
-  const handleDeleteContact = contactId => {
-    dispatch(deleteContact(contactId));
-  };
+  // const handleDeleteContact = contactId => {
+  //   dispatch(deleteContact(contactId));
+  // };
 
-  const handleFilterChange = value => {
-    dispatch(changeFilter(value));
-  };
+  // const handleFilterChange = value => {
+  //   dispatch(changeFilter(value));
+  // };
 
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
-      <ContactForm onAdd={handleAddContact} />
-      <SearchBox value={filter} onChange={handleFilterChange} />
-      <ContactList contacts={contacts} onDelete={handleDeleteContact} />
+      <ContactForm />
+      <SearchBox />
+      <ContactList />
     </div>
   );
 }

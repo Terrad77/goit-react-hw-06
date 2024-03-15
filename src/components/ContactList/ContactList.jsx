@@ -1,15 +1,20 @@
 //імпорт CSS-модуля
 import css from './ContactList.module.css';
 import Contact from '../Contact/Contact';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectNameFilter } from '../../redux/filtersSlice';
-import { selectContacts } from '../../redux/contactsSlice';
+import { deleteContact, selectContacts } from '../../redux/contactsSlice';
 
-export default function ContactList({ onDelete }) {
+export default function ContactList() {
   // Отримання значення фільтру з Redux store
   const filter = useSelector(selectNameFilter);
   // Отримання усіх контактів з Redux store
   const contacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
+
+  const handleDeleteContact = contactId => {
+    dispatch(deleteContact(contactId));
+  };
 
   // Фільтруємо контакти перед їх відображенням
   const filteredContacts = contacts.filter(contact =>
@@ -23,7 +28,7 @@ export default function ContactList({ onDelete }) {
           id={id}
           name={name}
           number={number}
-          onDelete={onDelete}
+          onDelete={handleDeleteContact}
         />
       ))}
     </div>

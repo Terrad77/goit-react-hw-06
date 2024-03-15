@@ -5,7 +5,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 //хук унікальних ідентифікаторів полів useId
 import { useId } from 'react';
-
 // npm install nanoid // бібл генерації ідентифікаторів
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
