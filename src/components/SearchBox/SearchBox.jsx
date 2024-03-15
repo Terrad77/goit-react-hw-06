@@ -1,6 +1,6 @@
 import css from './SearchBox.module.css';
 import { useId } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeFilter } from '../../redux/filtersSlice'; // Імпорт екшена зміни фільтра
 
 //Поле пошуку – це інпут без форми, значення якого записується у стан контрольований елемент,
@@ -8,14 +8,12 @@ import { changeFilter } from '../../redux/filtersSlice'; // Імпорт екш�
 export default function SearchBox() {
   const dispatch = useDispatch(); // Отримання функції dispatch з Redux store
   const nameFieldId = useId();
+  // Отримання поточного значення фільтра з Redux store і перетворення його в рядок
+  const filterValue = useSelector(state => state.filters.name.toString());
 
   // const handleFilterChange = value => {
   //   dispatch(changeFilter(value));
   // };
-
-  const handleFilterChange = value => {
-    dispatch(changeFilter(value));
-  };
 
   const handleChange = newValue => {
     dispatch(changeFilter(newValue)); // Відправка екшену зміни фільтра
@@ -35,7 +33,7 @@ export default function SearchBox() {
         type="text"
         name="name"
         id={nameFieldId}
-        value={handleFilterChange}
+        value={filterValue}
         onChange={e => handleChange(e.target.value)}
       />
     </div>
