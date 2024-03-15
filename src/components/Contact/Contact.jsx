@@ -1,10 +1,15 @@
 import css from './Contact.module.css';
-//for use icons install library react-icons до проекту як пакет NPM: npm install react-icons --save
-//import icons
+//npm install react-icons --save
 import { IoPersonSharp } from 'react-icons/io5';
 import { FaPhone } from 'react-icons/fa6';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice'; // Імпорт екшена видалення контакту
 
-export default function Contact({ id, name, number, onDelete }) {
+export default function Contact({ id, name, number }) {
+  const dispatch = useDispatch(); // Отримання функції dispatch з Redux store
+  const handleDelete = () => {
+    dispatch(deleteContact(id)); // Відправка екшену видалення контакту
+  };
   return (
     <div className={css.contactCard}>
       <ul className={css.contactList}>
@@ -17,7 +22,7 @@ export default function Contact({ id, name, number, onDelete }) {
           {number}
         </li>
       </ul>
-      <button className={css.btn} onClick={() => onDelete(id)}>
+      <button className={css.btn} onClick={handleDelete}>
         Delete
       </button>
     </div>

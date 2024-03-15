@@ -8,6 +8,8 @@ import { useId } from 'react';
 // import { useState } from 'react'; formik створюю state сам
 // бібл генерації ідентифікаторів : npm install nanoid
 import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice'; // Імпорт екшена додавання контакту
 
 // Об'являємо схему валідації об'єкта
 const ContactFormSchema = Yup.object().shape({
@@ -21,9 +23,10 @@ const ContactFormSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export default function ContactForm({ onAdd }) {
+export default function ContactForm() {
   const nameFieldId = useId();
   const numberFieldId = useId();
+  const dispatch = useDispatch(); // Отримання функції dispatch з Redux store
 
   return (
     <Formik
@@ -38,7 +41,7 @@ export default function ContactForm({ onAdd }) {
           name: values.name,
           number: values.number,
         };
-        onAdd(newContact);
+        dispatch(addContact(newContact)); // Відправка екшену додавання контакту
         resetForm();
       }}
       validationSchema={ContactFormSchema} // схема валидации
