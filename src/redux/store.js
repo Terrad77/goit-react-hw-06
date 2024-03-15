@@ -1,45 +1,44 @@
-//npm install redux // npm r redux
-//npm install react - redux // для зв'язку store з компонентами
-//npm install @reduxjs/toolkit // стандартизація та спрощення написання логіки Redux, no necessary: npm install redux, if no use combineReducers()
-
-//=============== Before ========================
-//import { createStore } from 'redux';
-
-// дозвол ініціалізувати логіку Redux DevTools та зв'язати її з розширенням в інструментах розробника.
-//npm install @redux-devtools / extension // npm r  @redux-devtools / extension
-
-// використовуємо devToolsEnhancer при створенні store, передавши її результат третім аргументом(enhancer), замість початкового стану.
-//import { devToolsEnhancer } from '@redux-devtools/extension';
-// import { rootReducer } from './reducer';
-
-//=============== After ========================
 import { configureStore } from '@reduxjs/toolkit';
-// import { rootReducer } from './reducer';
+//npm install redux-persist
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+// import { combineReducers } from '@reduxjs/toolkit';
 import contactsReducer from './contactsSlice'; // Імпорт редюсера контактів
 import filtersReducer from './filtersSlice'; // Імпорт редюсера фільтрів
+import initialContacts from '../data/initialContacts.json'; // Імпорт [{},{},{}] масиву об`єктів з контактами
+
+const contactsPersistConfig = {
+  key: 'contacts',
+  storage,
+  whitelist: ['items'], // список властивостей із слайсу для збереження в localStorage
+};
+
+//config для слайсу
+const persistedContactsReducer = persistReducer(
+  contactsPersistConfig,
+  contactsReducer
+);
 
 // початковий стан Redux для кореневого редюсера
 const initialState = {
   contacts: {
-    items: [],
+    items: initialContacts,
   },
   filters: {
     name: '',
   },
 };
-//редюсер який тільки повертає отриманий стан
-// const rootReducer = (state = initialState, action) => {
-//   return state;
-// };
 
-// Створюємо розширення стора, щоб додати інструменти розробника
-// const enhancer = devToolsEnhancer();
-
-// export const store = createStore(rootReducer, enhancer); //refactoring
+// create store
 export const store = configureStore({
-  reducer: {
-    contacts: contactsReducer, // Додавання редюсера контактів
-    filters: filtersReducer, // Додавання редюсера фільтрів
-  },
-  preloadedState: initialState, // Початковий стан
+  reducer:
+    //об'єкт стану
+    {
+      contacts: persistedContactsReducer, // передаємо новий reducer
+      filters: filtersReducer, // Додавання редюсера фільтрів до слайсу filters
+    },
+  preloadedState: initialState, // Початковий стан store
 });
+
+//persisting store
+export const persistor = persistStore(store);

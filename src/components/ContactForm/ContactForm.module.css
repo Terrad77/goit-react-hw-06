@@ -12,6 +12,7 @@
   border-radius: 4px;
   background-color: transparent;
   color: inherit;
+  border: 2px solid;
 }
 
 .btn {

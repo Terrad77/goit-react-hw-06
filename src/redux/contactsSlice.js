@@ -7,7 +7,7 @@ const contactsSlice = createSlice({
     items: [],
   },
   reducers: {
-    // Екшени слайса для використання в dispatch:
+    // Екшени слайса для dispatch:
     // addContact - додавання нового контакту до властивості items
     addContact(state, action) {
       state.items.push(action.payload);
@@ -21,9 +21,9 @@ const contactsSlice = createSlice({
   },
 });
 
-// експорт редюсер, а також його екшени і селектори.
+// експорт редюсер, екшени і селектори.
 
-export const selectContacts = state => state.contacts.items; // функція-селектор для використання в useSelector: selectContacts - повертає список контактів з властивості items.
-
+// функція-селектор для useSelector, повертає список контактів з властивості items.
+export const selectContacts = state => state.contacts.items;
 export const { addContact, deleteContact } = contactsSlice.actions;
 export default contactsSlice.reducer;

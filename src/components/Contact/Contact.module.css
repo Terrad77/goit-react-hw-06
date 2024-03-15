@@ -32,4 +32,5 @@
 .btn:focus {
   background-color: #9999;
   border: 2px solid gray;
+  color: red;
 }

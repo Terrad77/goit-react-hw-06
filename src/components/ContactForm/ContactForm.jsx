@@ -1,12 +1,12 @@
 import css from './ContactForm.module.css';
-//бібл форм Formik + бібл валідації yup: npm install formik yup
+//npm install formik yup // formik - бібл форм  + yup - бібл валідації
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 //namespace import
 import * as Yup from 'yup';
 //хук унікальних ідентифікаторів полів useId
 import { useId } from 'react';
-// import { useState } from 'react'; formik створюю state сам
-// бібл генерації ідентифікаторів : npm install nanoid
+
+// npm install nanoid // бібл генерації ідентифікаторів
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contactsSlice'; // Імпорт екшена додавання контакту
@@ -42,11 +42,11 @@ export default function ContactForm() {
           number: values.number,
         };
         dispatch(addContact(newContact)); // Відправка екшену додавання контакту
-        resetForm();
+        resetForm(); //скидання форми
       }}
       validationSchema={ContactFormSchema} // схема валидации
-      validationOnBlur={false} // нет валидации при выходе из поля
-      validateOnChange={false} // нет валидации при каждом изменении значений
+      // validationOnBlur={false} // нет валидации при выходе из поля
+      // validateOnChange={false} // нет валидации при каждом изменении значений
     >
       <Form className={css.form}>
         <label htmlFor={nameFieldId}>Name</label>
