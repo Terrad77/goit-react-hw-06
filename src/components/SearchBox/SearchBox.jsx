@@ -8,12 +8,9 @@ import { changeFilter } from '../../redux/filtersSlice'; // Імпорт екш�
 export default function SearchBox() {
   const dispatch = useDispatch(); // Отримання функції dispatch з Redux store
   const nameFieldId = useId();
-  // Отримання поточного значення фільтра з Redux store і перетворення його в рядок
-  const filterValue = useSelector(state => state.filters.name.toString());
 
-  // const handleFilterChange = value => {
-  //   dispatch(changeFilter(value));
-  // };
+  // Отримання поточного значення свойства name из слайса filters з Redux store
+  const filterValue = useSelector(state => state.filters.name);
 
   const handleChange = newValue => {
     dispatch(changeFilter(newValue)); // Відправка екшену зміни фільтра

@@ -10,8 +10,8 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-// import { combineReducers } from '@reduxjs/toolkit';
 import contactsReducer from './contactsSlice'; // Імпорт редюсера контактів
 import filtersReducer from './filtersSlice'; // Імпорт редюсера фільтрів
 import initialContacts from '../data/initialContacts.json'; // Імпорт [{},{},{}] масиву об`єктів з контактами
@@ -22,7 +22,7 @@ const contactsPersistConfig = {
   whitelist: ['items'], // список властивостей із слайсу для збереження в localStorage
 };
 
-//config для слайсу
+//config для слайсу contacts
 const persistedContactsReducer = persistReducer(
   contactsPersistConfig,
   contactsReducer
@@ -46,12 +46,14 @@ export const store = configureStore({
       contacts: persistedContactsReducer, // передаємо новий reducer
       filters: filtersReducer, // Додавання редюсера фільтрів до слайсу filters
     },
+  //========== Use with Redux-Persist: If using Redux-Persist, you should specifically ignore all the action types it dispatches ====//
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+  //========================= /  =====================================//
   preloadedState: initialState, // Початковий стан store
 });
 
